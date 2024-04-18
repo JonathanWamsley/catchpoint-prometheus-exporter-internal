@@ -1,6 +1,6 @@
 module catchpoint-prometheus-exporter
 
-go 1.21.3
+go 1.20
 
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
