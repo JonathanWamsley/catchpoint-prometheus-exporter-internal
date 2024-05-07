@@ -14,48 +14,16 @@
 
 package collector
 
-import (
-	"errors"
-	"time"
-)
-
-// RateLimiter controls the rate of API requests.
-type RateLimiter struct {
-	delay time.Duration
-}
-
-// NewRateLimiter creates a new RateLimiter with the specified delay.
-func NewRateLimiter(delayInSeconds int) *RateLimiter {
-	return &RateLimiter{
-		delay: time.Duration(delayInSeconds) * time.Second,
-	}
-}
-
-// Wait waits for the necessary amount of time before making the next request.
-func (rl *RateLimiter) Wait() {
-	time.Sleep(rl.delay)
-}
-
 type Config struct {
-	BearerToken string
-	RateLimiter *RateLimiter
-	NodeIds     []int
+	VerboseLogging bool
+	Port           string
+	WebhookPath    string
 }
 
-var (
-	errNoBearerToken = errors.New("bearer token must be specified")
-)
-
-func (c *Config) Validate() error {
-	if c.BearerToken == "" {
-		return errNoBearerToken
-	}
-	return nil
-}
-
-func NewConfig(bearerToken string, rateLimiter *RateLimiter) *Config {
+func NewConfig() *Config {
 	return &Config{
-		BearerToken: bearerToken,
-		RateLimiter: rateLimiter,
+		VerboseLogging: false,
+		Port:           "9090",
+		WebhookPath:    "/webhook",
 	}
 }
